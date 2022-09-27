@@ -7,8 +7,12 @@ h1, p {
     text-align: center;
 }
 
+/* body {
+    height: 100%;
+} */
+
 #map {
-    height: 500px;
-    width: 90%;
-    margin: auto;
+    height: 800px;
+    /* width: 90%;
+    margin: auto; */
 }
