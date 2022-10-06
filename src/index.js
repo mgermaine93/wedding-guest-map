@@ -29,7 +29,7 @@ L.Control.textbox = L.Control.extend({
 	L.control.textbox({ position: 'topleft' }).addTo(map);
 
 // actually adds the points to the map
-let invited = L.geoJson(guestsJson, {filter: weddingPartyFilter}).addTo(map);
+let invited = L.geoJson(guestsJson, {filter: attendedFilter}).addTo(map);
 
 // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
 function coupleFilter(feature) {
@@ -97,6 +97,15 @@ let collegeFriends = null;
 
 // Post-College friends
 let postCollegeFriends = null;
+
+// Attended rehearsal dinner
+let attendedRehearsalDinner = null;
+
+// Attended welcome party
+let attendedWelcomeParty = null;
+
+// Vendor
+let isVendor = null;
 
 
 // // attempting to create a legend (static for now)
