@@ -1,26 +1,79 @@
-// defines where the church is
-let church = L.marker([-81.935620, 40.805270]).bindPopup('This is where we got married!');
+let church = L.marker([40.805270, -81.935620]).bindPopup('This is where we got married!');
 let churchGroup = L.layerGroup([church]);
 
-// actually adds the points to the map
-let couple = L.layerGroup(guestsJson, {filter: coupleFilter})
-let invited = L.layerGroup(guestsJson, {filter: invitedFilter})
-let attended = L.layerGroup(guestsJson, {filter: attendedFilter})
-let bridesSide = L.layerGroup(guestsJson, {filter: bridesSideFilter})
-let groomsSide = L.layerGroup(guestsJson, {filter: groomsSideFilter})
-let couplesSide = L.layerGroup(guestsJson, {filter: couplesSideFilter})
-let weddingParty = L.layerGroup(guestsJson, {filter: weddingPartyFilter})
-let bridesFamily = L.layerGroup(guestsJson, {filter: isBridesFamilyFilter})
-let groomsFamily = L.layerGroup(guestsJson, {filter: isGroomsFamilyFilter})
-let family = L.layerGroup(guestsJson, {filter: isFamilyFilter})
-let friends = L.layerGroup(guestsJson, {filter: isFriendFilter})
-let familyFriends = L.layerGroup(guestsJson, {filter: isFamilyFriendFilter})
-let preCollegeFriends = L.layerGroup(guestsJson, {filter: isPreCollegeFriendFilter})
-let collegeFriends = L.layerGroup(guestsJson, {filter: isCollegeFriendFilter})
-let postCollegeFriends = L.layerGroup(guestsJson, {filter: isPostCollegeFriendFilter})
-let rehearsalDinnerAttendees = L.layerGroup(guestsJson, {filter: attendedRehearsalDinnerFilter})
-let welcomePartyAttendees = L.layerGroup(guestsJson, {filter: attendedWelcomePartyFilter})
-let vendors = L.layerGroup(guestsJson, {filter: isVendorFilter})
+// groups all of the map points together in their respective groups, using the functions below
+let couple = L.geoJSON(guestsJson, {
+  filter: coupleFilter,
+  onEachFeature: onEachFeature
+})
+let invited = L.geoJSON(guestsJson, {
+  filter: invitedFilter,
+  onEachFeature: onEachFeature
+})
+let attended = L.geoJSON(guestsJson, {
+  filter: attendedFilter,
+  onEachFeature: onEachFeature
+})
+let bridesSide = L.geoJSON(guestsJson, {
+  filter: bridesSideFilter,
+  onEachFeature: onEachFeature
+})
+let groomsSide = L.geoJSON(guestsJson, {
+  filter: groomsSideFilter,
+  onEachFeature: onEachFeature
+})
+let couplesSide = L.geoJSON(guestsJson, {
+  filter: couplesSideFilter,
+  onEachFeature: onEachFeature
+})
+let weddingParty = L.geoJSON(guestsJson, {
+  filter: weddingPartyFilter,
+  onEachFeature: onEachFeature
+})
+let bridesFamily = L.geoJSON(guestsJson, {
+  filter: isBridesFamilyFilter,
+  onEachFeature: onEachFeature
+})
+let groomsFamily = L.geoJSON(guestsJson, {
+  filter: isGroomsFamilyFilter,
+  onEachFeature: onEachFeature
+})
+let family = L.geoJSON(guestsJson, {
+  filter: isFamilyFilter,
+  onEachFeature: onEachFeature
+})
+let friends = L.geoJSON(guestsJson, {
+  filter: isFriendFilter,
+  onEachFeature: onEachFeature
+})
+let familyFriends = L.geoJSON(guestsJson, {
+  filter: isFamilyFriendFilter,
+  onEachFeature: onEachFeature
+})
+let preCollegeFriends = L.geoJSON(guestsJson, {
+  filter: isPreCollegeFriendFilter,
+  onEachFeature: onEachFeature
+})
+let collegeFriends = L.geoJSON(guestsJson, {
+  filter: isCollegeFriendFilter,
+  onEachFeature: onEachFeature
+})
+let postCollegeFriends = L.geoJSON(guestsJson, {
+  filter: isPostCollegeFriendFilter,
+  onEachFeature: onEachFeature
+})
+let rehearsalDinnerAttendees = L.geoJSON(guestsJson, {
+  filter: attendedRehearsalDinnerFilter,
+  onEachFeature: onEachFeature
+})
+let welcomePartyAttendees = L.geoJSON(guestsJson, {
+  filter: attendedWelcomePartyFilter,
+  onEachFeature: onEachFeature
+})
+let vendors = L.geoJSON(guestsJson, {
+  filter: isVendorFilter,
+  onEachFeature: onEachFeature
+})
 
 // loads in the specific Open Street Map map/"tile" to use
 let osm = L.tileLayer(
@@ -32,15 +85,17 @@ let osm = L.tileLayer(
 // set to center onto the geographic center of the USA
 let map = L.map('map', {
   center: [39.8283, -98.5795],
-  zoom: 5,
+  zoom: 4.5,
   layers: [osm, churchGroup]
 });
 // .setView([39.8283, -98.5795], 5);
 
+// defines the base open street map view that we see upon page load
 let baseMaps = {
   "OpenStreetMap": osm
 }
 
+// defines the different layers we can select in the control
 let overlayMaps = {
   // different groups of points go here
   "Church": churchGroup,
@@ -65,7 +120,8 @@ let overlayMaps = {
 }
 
 let layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-let couplePoints = L.geoJson(guestsJson, {filter: coupleFilter}).addTo(map);
+// let couplePoints = L.geoJson(guestsJson, {filter: coupleFilter}).addTo(map);
+// let couplePoints = L.layerGroup(guestsJson, {filter: coupleFilter})
 
 
 // // trying to create a textbox over the map
@@ -88,8 +144,14 @@ let couplePoints = L.geoJson(guestsJson, {filter: coupleFilter}).addTo(map);
 // 	L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
 // 	L.control.textbox({ position: 'topleft' }).addTo(map);
 
-
 // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
+function onEachFeature(feature, layer) {
+  // checks if the feature has a property called "popupContent"
+  if (feature.properties && feature.properties.popupContent) {
+    layer.bindPopup(feature.properties.popupContent);
+  }
+}
+
 function coupleFilter(feature) {
   if (feature.properties.is_groom || feature.properties.is_bride) {
     return true;
@@ -105,7 +167,7 @@ function invitedFilter(feature) {
 
 // Attended
 function attendedFilter(feature) {
-  if (feature.properties.attended == true) {
+  if (feature.properties.attended_wedding == true) {
     return true;
   }
 }
