@@ -5,6 +5,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Matt Germaine",
+        "state": "Pennsylvania",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": true,
@@ -35,6 +36,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Meredith Eyre",
+        "state": "Pennsylvania",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": true,
@@ -65,6 +67,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "John Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -95,6 +98,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Lee Ann Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -125,6 +129,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Peter Eyre",
+        "state": "California",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": true,
@@ -155,6 +160,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jack Eyre",
+        "state": "Tennessee",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": true,
@@ -185,6 +191,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Annie Hornung",
+        "state": "Tennessee",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -215,6 +222,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Morgan Jenkins",
+        "state": "California",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -245,6 +253,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Pat Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -275,6 +284,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Joe Eyre",
+        "state": "California",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -305,6 +315,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Terri Eyre",
+        "state": "California",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -335,6 +346,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Nick Eyre",
+        "state": "California",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -365,6 +377,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Stephanie Eyre",
+        "state": "California",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -395,6 +408,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jim Eyre",
+        "state": "Georgia",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -425,6 +439,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Paula Volino",
+        "state": "Georgia",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -455,6 +470,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Patrick Eyre",
+        "state": "Texas",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -485,6 +501,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Katie Volino",
+        "state": "Georgia",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -515,6 +532,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jeff Eyre",
+        "state": "North Carolina",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -545,6 +563,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Linda Eyre",
+        "state": "North Carolina",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -575,6 +594,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Ally Avila",
+        "state": "North Carolina",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -605,6 +625,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Glen Fitzjerrell",
+        "state": "Illinois",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -635,6 +656,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jane Fitzjerrell",
+        "state": "Illinois",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -665,6 +687,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Barbara Everett",
+        "state": "Virginia",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -695,6 +718,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Richard Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -725,6 +749,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Cara Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -755,6 +780,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Trish Rucker",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -785,6 +811,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Carolyn Naso",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -815,6 +842,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Rich Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -845,6 +873,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Kathy Eyre",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -875,6 +904,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Michael Bloom",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -905,6 +935,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Angela Bloom",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -935,6 +966,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Shane Stewart",
+        "state": "Tennessee",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -965,6 +997,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mrs. Shane Stewart",
+        "state": "Tennessee",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -995,6 +1028,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Wayne Koide",
+        "state": "California",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1025,6 +1059,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Susan Koide",
+        "state": "California",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1055,6 +1090,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Janet Sheffler",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1085,6 +1121,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Lynne Megerian",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1115,6 +1152,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Cliff Megerian",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1145,6 +1183,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Caroline Megerian",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": true,
@@ -1175,6 +1214,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Andrew Megerian",
+        "state": "New York",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1205,6 +1245,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mark Megerian",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1235,6 +1276,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Tom McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1265,6 +1307,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Deb McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1295,6 +1338,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Michael McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1325,6 +1369,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Julie McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1355,6 +1400,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mackenzie McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1385,6 +1431,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Ellie McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1415,6 +1462,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Logan McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1445,6 +1493,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "John Elliott",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1475,6 +1524,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Lauren Elliott",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1505,6 +1555,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Lindsey Elliott",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1535,6 +1586,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Johnny Elliott",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1565,6 +1617,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Gary McClave",
+        "state": "North Carolina",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1595,6 +1648,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Sandi McClave",
+        "state": "North Carolina",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1625,6 +1679,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jim McClave",
+        "state": "Virginia",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1655,6 +1710,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mrs. Jim McClave",
+        "state": "Virginia",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1685,6 +1741,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Peyton McClave",
+        "state": "Virginia",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1715,6 +1772,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Steven McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1745,6 +1803,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Maggie McClave",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1775,6 +1834,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Eileen Moran",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1805,6 +1865,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Chris Essig",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1835,6 +1896,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mary Essig",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1865,6 +1927,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "John Wanhainen",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1895,6 +1958,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mrs. John Wanhainen",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1925,6 +1989,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Chris Alibeckoff",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1955,6 +2020,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Dominique Alibeckoff",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -1985,6 +2051,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Rick Lehtinen",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2015,6 +2082,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Marcy Campbell",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2045,6 +2113,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Whitaker Campbell-Lehtinen",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2075,6 +2144,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Lily Campbell-Lehtinen",
+        "state": "Ohio",
         "attended_wedding": true,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2105,6 +2175,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jeff Roche",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2135,6 +2206,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mrs. Jeff Roche",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2165,6 +2237,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Dale Jarvis",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2195,6 +2268,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Janet Jarvis",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2225,6 +2299,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "The McCusker-Johnson Family",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2255,6 +2330,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jim Pyers",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2285,6 +2361,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Mrs. Jim Pyers",
+        "state": "Ohio",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2315,6 +2392,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Jorge Scheirer",
+        "state": "Pennsylvania",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
@@ -2345,6 +2423,7 @@ let guestsJson  = {
       "type": "Feature",
       "properties": {
         "name": "Tracy Scheirer",
+        "state": "Pennsylvania",
         "attended_wedding": false,
         "is_officiant": false,
         "in_wedding_party": false,
