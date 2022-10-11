@@ -1,5 +1,19 @@
+let churchIcon = L.icon({
+  iconUrl: './img/church.png',
+  // shadowUrl: './img/church-shadow.png',
+  iconSize: [36, 36], // size of the icon
+  // shadowSize: [66, 30], // size of the shadow
+  iconAnchor: [18, 18], // point of the icon which will correspond with the marker's actual location
+  // shadowAnchor: [33, 15], // the same for the shadow
+  popupAnchor: [0, -25] // point from which the popup should open relative to the iconAnchor
+});
+
 // Defines the church marker and makes it its own layer so that it shows when the page initially loads.
-let church = L.marker([40.805270, -81.935620]).bindPopup('This is where we got married!');
+let church = L.marker(
+  [40.805270, -81.935620],
+  {icon: churchIcon}
+).bindPopup('This is where we got married!');
+
 let churchGroup = L.layerGroup([church]);
 
 // usStates = L.geoJson(usStates, {
@@ -95,7 +109,9 @@ let osm = L.tileLayer(
 // Set the center onto the geographic center of the USA
 let map = L.map('map', {
   center: [39.8283, -98.5795],
-  zoom: 4.5,
+  // Thanks to https://leafletjs.com/examples/zoom-levels/
+  zoomSnap: 0.25,
+  zoom: 4.75,
   layers: [osm, churchGroup] // These load when the page is initially loaded
 });
 
@@ -275,15 +291,15 @@ function isVendorFilter(feature) {
 
 // Get colors based on population density
 function getColor(dataPoint) {
-  return dataPoint > 100 ? '#7f0000' :
-         dataPoint > 50 ? '#990000' :
-         dataPoint > 20  ? '#d7301f' :
-         dataPoint > 10  ? '#ef6548' :
-         dataPoint > 5  ? '#fc8d59' :
-         dataPoint > 2   ? '#fdbb84' :
-         dataPoint > 1   ? '#fdd49e' :
-         dataPoint == 1   ? '#fee8c8' :
-                           '#fff7ec'; 
+  return dataPoint > 50 ? '#b10026' :
+         dataPoint > 20 ? '#e31a1c' :
+         dataPoint > 10  ? '#fc4e2a' :
+         dataPoint > 5  ? '#fd8d3c' :
+         dataPoint > 3  ? '#feb24c' :
+         dataPoint > 2   ? '#fed976' :
+         dataPoint > 1   ? '#ffeda0' :
+         dataPoint > 0   ? '#ffffcc' :
+                           'white'; 
 }
 
 // Styles the colors based on the density determined above
@@ -294,10 +310,11 @@ function style(feature) {
     opacity: 1,
     color: 'white',
     dashArray: '3',
-    fillOpacity: 0.6
+    fillOpacity: 0.7
   };
 }
 
+// Outlines a state in a dark grey border when the user hovers over it with a mouse.
 function highlightFeature(e) {
     let layer = e.target;
 
@@ -311,39 +328,96 @@ function highlightFeature(e) {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
+    info.update(layer.feature.properties);
 }
 
+// Removes the dark grey border (defined immediately above) when the user removes their mouse cursor from over the state.
 function resetHighlight(e) {
   // Important to reset the highlights of the states data, NOT the guests data!
   stateOutlines.resetStyle(e.target);
+  info.update();
 }
 
-// function zoomToFeature(e) {
-//     map.fitBounds(e.target.getBounds());
-// }
+// Enables a user to click on a state to zoom in and see points in more detail.
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
 
-// geojson = L.geojson(guestsJson);
+// Creates the map title
+let title = L.control({position: 'topleft'});
 
-// let couplePoints = L.geoJson(guestsJson, {filter: coupleFilter}).addTo(map);
-// let couplePoints = L.layerGroup(guestsJson, {filter: coupleFilter})
+title.onAdd = function (map) {
+  let div = L.DomUtil.create('div', 'info title')
+  div.innerHTML += '<h1>Wedding Map</h1>';
+}
+
+// Creates the Info menu that dynamically populates with state and guest number data whenever states are hovered over
+let info = L.control({position: 'bottomleft'});
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// Method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+
+    // Adjusts the text that the user sees to be grammatically correct
+    function returnGuestValue(density) {
+      if (density == 1) {
+        return "guest"
+      }
+      return "guests"
+    }
+    this._div.innerHTML = '<h4>Matt and Meredith\'s Wedding Guests</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' + props.density + ' ' + returnGuestValue(props.density) + ''
+        : 'Hover over a state');
+};
 
 
-// // trying to create a textbox over the map
-// L.Control.textbox = L.Control.extend({
+// Creates the legend for the heatmap/chloropleth diagram
+let legend = L.control({position: 'bottomright'});
 
-// 		onAdd: function(map) {
-			
-//       let text = L.DomUtil.create('div');
-//       text.id = "info_text";
-//       text.innerHTML = "<strong>Wedding Map 2022</strong>"
-//       return text;
+legend.onAdd = function (map) {
+  let div = L.DomUtil.create('div', 'info legend')
+  let grades = [0, 1, 2, 3, 5, 10, 20, 50]
 
-// 		},
+  div.innerHTML += '<h3>Legend</h3>';
 
-// 		onRemove: function(map) {
-// 			// Nothing to do here
-// 		}
-// 	});
+  // Loop through the density intervals and generate a corresponding colored label square for each interval
+  for (let i = 0; i < grades.length; i++) {
+    if (i == 1) {
+      div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + ' person<br>';
+    }
+    // First element should just be zero
+    else if (i < 4) {
+      div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + ' people<br>';
+    }
+    // Last element should just be 50+
+    else if (i == grades.length - 1) {
+      div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + '+ people';
+    }
+    // Other elements should present a range
+    else {
+      div.innerHTML += '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' people<br>' : '+');
+    }
+  }
+  return div;
+}
 
-// 	L.control.textbox = function(opts) { return new L.Control.textbox(opts);}
-// 	L.control.textbox({ position: 'topleft' }).addTo(map);
+// Thanks to https://stackoverflow.com/questions/60563661/leaflet-how-can-i-display-a-marker-or-legend-only-on-one-layer
+stateOutlines.on('add', function(e) {
+  if (map.hasLayer(stateOutlines)) {
+    info.addTo(map);
+    legend.addTo(map);
+  }
+});
+
+// Thanks to https://gis.stackexchange.com/questions/244844/how-to-remove-the-leaflet-l-control-layers
+stateOutlines.on('remove', function(e) {
+  if (! map.hasLayer(stateOutlines)) {
+    info.remove(map);
+    legend.remove(map);
+  }
+});
