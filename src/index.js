@@ -1,29 +1,28 @@
+// Creates the custom church icon.
 let churchIcon = L.icon({
   iconUrl: './img/church.png',
-  // shadowUrl: './img/church-shadow.png',
   iconSize: [36, 36], // size of the icon
-  // shadowSize: [66, 30], // size of the shadow
   iconAnchor: [18, 18], // point of the icon which will correspond with the marker's actual location
-  // shadowAnchor: [33, 15], // the same for the shadow
-  popupAnchor: [0, -25] // point from which the popup should open relative to the iconAnchor
+  popupAnchor: [0, -25] // point from which the popup should open relative to the iconAnchor,
 });
 
 // Defines the church marker and makes it its own layer so that it shows when the page initially loads.
 let church = L.marker(
-  [40.805270, -81.935620],
-  {icon: churchIcon}
+  [40.805270, -81.935620], {
+    icon: churchIcon,
+    alt: 'First Presbyterian Church of Wooster'
+  }
 ).bindPopup('This is where we got married!');
 
 let churchGroup = L.layerGroup([church]);
 
-// usStates = L.geoJson(usStates, {
-//     style: style,
-//     onEachFeature: onEachFeature
-// })
-
 // Uses the helper functions (defined elsewhere) to create the different groups of guests based on criteria.
 let stateOutlines = L.geoJson(usStatesData, {
   style: style,
+  onEachFeature: onEachFeature
+})
+let everyone = L.geoJSON(guestsJson, {
+  filter: everyoneFilter,
   onEachFeature: onEachFeature
 })
 let couple = L.geoJSON(guestsJson, {
@@ -60,6 +59,10 @@ let bridesFamily = L.geoJSON(guestsJson, {
 })
 let groomsFamily = L.geoJSON(guestsJson, {
   filter: isGroomsFamilyFilter,
+  onEachFeature: onEachFeature
+})
+let heardFrom = L.geoJSON(guestsJson, {
+  filter: heardFromFilter,
   onEachFeature: onEachFeature
 })
 let family = L.geoJSON(guestsJson, {
@@ -125,6 +128,7 @@ let overlayMaps = {
   // Different groups of points go here
   "Church": churchGroup,
   "State Outlines": stateOutlines,
+  "Everyone": everyone,
   "Couple": couple,
   "Invitees": invited,
   "Attendees": attended,
@@ -142,7 +146,8 @@ let overlayMaps = {
   "Post-College Friends": postCollegeFriends,
   "Rehearsal Dinner Attendees": rehearsalDinnerAttendees,
   "Welcome Party Attendees": welcomePartyAttendees,
-  "Vendors": vendors
+  "Vendors": vendors,
+  "Heard From (but not invited)": heardFrom 
 }
 
 // Basically sets the control menu in the upper right of the map
@@ -166,6 +171,11 @@ function coupleFilter(feature) {
   if (feature.properties.is_groom || feature.properties.is_bride) {
     return true;
   }
+}
+
+// Everyone
+function everyoneFilter(feature) {
+  return true;
 }
 
 // Invited
@@ -224,8 +234,12 @@ function isGroomsFamilyFilter(feature) {
   }
 }
 
-// Heard from but not invited (?)
-let heardFrom = null;
+// Heard from but not invited
+function heardFromFilter(feature) {
+  if (feature.properties.heardFrom == true && feature.properties.invited == false) {
+    return true;
+  }
+}
 
 // Family
 function isFamilyFilter(feature) {
