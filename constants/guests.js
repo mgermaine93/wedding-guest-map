@@ -5484,7 +5484,7 @@ let guestsJson = {
         "popupContent": "Alea",
         "heardFrom": false
       },
-      "geometry": { "type": "Point", "coordinates": [-71.14965, 42.376977] }
+      "geometry": { "type": "Point", "coordinates": [-76.497750, 42.447110] }
     },
     {
       "type": "Feature",
@@ -5510,7 +5510,7 @@ let guestsJson = {
         "popupContent": "David",
         "heardFrom": false
       },
-      "geometry": { "type": "Point", "coordinates": [-71.14965, 42.376977] }
+      "geometry": { "type": "Point", "coordinates": [-76.497750, 42.447110] }
     },
     {
       "type": "Feature",
