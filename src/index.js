@@ -105,7 +105,7 @@ let vendors = L.geoJSON(guestsJson, {
 // Loads in the specific Open Street Map map/"tile" to use
 let osm = L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
+    maxZoom: 11,
     attribution: '© OpenStreetMap',
 });
 
