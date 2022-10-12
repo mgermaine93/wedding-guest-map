@@ -27,3 +27,6 @@ The following links/attributions greatly assisted me with this project. In no pa
 - [Colorbrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3), for generating a lovely color gradient for the heatmap.
 - [Mike Bostock](https://bost.ocks.org/mike/) and [Leaflet](https://leafletjs.com/examples/choropleth/) for the US states GeoJSON data.
 - Various [StackOverflow](https://stackoverflow.com/) articles, as always.
+
+* The super cool Leaflet [MarkerCluster](https://github.com/Leaflet/Leaflet.markercluster) plugin.
+* [GeoDev's](https://www.youtube.com/watch?v=R-V7XFUbrkw&ab_channel=GeoDev) YouTube channel.
