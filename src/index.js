@@ -21,86 +21,146 @@ let stateOutlines = L.geoJson(usStatesData, {
   style: style,
   onEachFeature: onEachFeature
 })
-let everyone = L.geoJSON(guestsJson, {
-  filter: everyoneFilter,
-  onEachFeature: onEachFeature
-})
-let couple = L.geoJSON(guestsJson, {
-  filter: coupleFilter,
-  onEachFeature: onEachFeature
-})
-let invited = L.geoJSON(guestsJson, {
-  filter: invitedFilter,
-  onEachFeature: onEachFeature
-})
-let attended = L.geoJSON(guestsJson, {
-  filter: attendedFilter,
-  onEachFeature: onEachFeature
-})
-let bridesSide = L.geoJSON(guestsJson, {
-  filter: bridesSideFilter,
-  onEachFeature: onEachFeature
-})
-let groomsSide = L.geoJSON(guestsJson, {
-  filter: groomsSideFilter,
-  onEachFeature: onEachFeature
-})
-let couplesSide = L.geoJSON(guestsJson, {
-  filter: couplesSideFilter,
-  onEachFeature: onEachFeature
-})
-let weddingParty = L.geoJSON(guestsJson, {
-  filter: weddingPartyFilter,
-  onEachFeature: onEachFeature
-})
-let bridesFamily = L.geoJSON(guestsJson, {
-  filter: isBridesFamilyFilter,
-  onEachFeature: onEachFeature
-})
-let groomsFamily = L.geoJSON(guestsJson, {
-  filter: isGroomsFamilyFilter,
-  onEachFeature: onEachFeature
-})
-let heardFrom = L.geoJSON(guestsJson, {
-  filter: heardFromFilter,
-  onEachFeature: onEachFeature
-})
-let family = L.geoJSON(guestsJson, {
-  filter: isFamilyFilter,
-  onEachFeature: onEachFeature
-})
-let friends = L.geoJSON(guestsJson, {
-  filter: isFriendFilter,
-  onEachFeature: onEachFeature
-})
-let familyFriends = L.geoJSON(guestsJson, {
-  filter: isFamilyFriendFilter,
-  onEachFeature: onEachFeature
-})
-let preCollegeFriends = L.geoJSON(guestsJson, {
-  filter: isPreCollegeFriendFilter,
-  onEachFeature: onEachFeature
-})
-let collegeFriends = L.geoJSON(guestsJson, {
-  filter: isCollegeFriendFilter,
-  onEachFeature: onEachFeature
-})
-let postCollegeFriends = L.geoJSON(guestsJson, {
-  filter: isPostCollegeFriendFilter,
-  onEachFeature: onEachFeature
-})
-let rehearsalDinnerAttendees = L.geoJSON(guestsJson, {
-  filter: attendedRehearsalDinnerFilter,
-  onEachFeature: onEachFeature
-})
-let welcomePartyAttendees = L.geoJSON(guestsJson, {
-  filter: attendedWelcomePartyFilter,
-  onEachFeature: onEachFeature
-})
-let vendors = L.geoJSON(guestsJson, {
-  filter: isVendorFilter,
-  onEachFeature: onEachFeature
-})
+let everyone = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: everyoneFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let couple = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: coupleFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let invited = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: invitedFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let attended = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: attendedFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let bridesSide = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: bridesSideFilter,
+    onEachFeature: onEachFeature
+  })
+);
+let groomsSide = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: groomsSideFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let couplesSide = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: couplesSideFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let weddingParty = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: weddingPartyFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let bridesFamily = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isBridesFamilyFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let groomsFamily = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isGroomsFamilyFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let heardFrom = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: heardFromFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let family = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isFamilyFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let friends =L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isFriendFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let familyFriends = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isFamilyFriendFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let preCollegeFriends = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isPreCollegeFriendFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let collegeFriends = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isCollegeFriendFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let postCollegeFriends = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isPostCollegeFriendFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let rehearsalDinnerAttendees = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: attendedRehearsalDinnerFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let welcomePartyAttendees = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: attendedWelcomePartyFilter,
+    onEachFeature: onEachFeature
+  })
+)
+let vendors = L.markerClusterGroup().addLayer(
+  L.geoJSON(guestsJson, {
+    style: style,
+    filter: isVendorFilter,
+    onEachFeature: onEachFeature
+  })
+)
 
 // Loads in the specific Open Street Map map/"tile" to use
 let osm = L.tileLayer(
@@ -435,3 +495,27 @@ stateOutlines.on('remove', function(e) {
     legend.remove(map);
   }
 });
+
+// UNDER CONSTRUCTION //
+
+// okay, some pseudo-code...
+
+// when a layer is selected to be ADDED, what do we want to do?
+// we want to first iterate over all the other layers of markers (map.eachLayer...)...
+// check if any other layers of markers have already been selected to be added (e.g., checked) (map.hasLayer...)...
+// compare the markers in the layers that have already been added with the points in the layer that will be added...
+// see if any of those markers are duplicates...
+// if so, don't add duplicates of those markers.
+// if not, add the marker.
+
+// the opposite is basically true for REMOVING layers...
+// when a layer is selected to be REMOVED...
+// first, iterate over all the other layers of markers...
+// check to see if any other layers have been added...
+// check to see if the layer to be removed contains markers that are in another plotted layer (e.g., markers that should remain on the map)
+// if there are such markers, somehow skip them and DON'T remove them from the map.
+// if there aren't any such markers, proceed with removing them from the map.
+
+//// DOCUMENTATION for eachLayer() and hasLayer() is probably a good place to start.
+//// Need to also figure out how to iterate over markers and find points/properties of markers.
+// https://leafletjs.com/reference.html#map-methods-for-layers-and-controls

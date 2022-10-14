@@ -7,6 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+    <!-- Actual project CSS file is here -->
     <link rel="stylesheet" href="styles.css" />
     <!-- Leaflet CSS file is here -->
     <link
@@ -15,15 +16,21 @@
       integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
       crossorigin=""
     />
+    <!-- MarkerCluster Plugin CSS is here -->
+    <link rel="stylesheet" href="./dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="./dist/MarkerCluster.Default.css" />
     <!-- Leaflet JavaScript file is here -->
     <script
       src="https://unpkg.com/leaflet@1.9.1/dist/leaflet.js"
       integrity="sha256-NDI0K41gVbWqfkkaHj15IzU7PtMoelkzyKp8TOaFQ3s="
       crossorigin=""
     ></script>
+    <!-- Leaflet MarkerCluster JS is here -->
+    <script src="./dist/leaflet.markercluster.js"></script>
     <!-- Reference the map geojson points here -->
     <script src="./constants/guests.js"></script>
     <script src="./constants/us-states.js"></script>
+
     <title>Wedding Map 2022</title>
   </head>
   <body>
