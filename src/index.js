@@ -16,9 +16,11 @@ let church = L.marker(
 
 let churchGroup = L.layerGroup([church]);
 
+
 // Uses the helper functions (defined elsewhere) to create the different groups of guests based on criteria.
 let stateOutlines = L.geoJson(usStatesData, {
   style: style,
+  // filter: a function that somehow gets all of the plotted layers and their points?
   onEachFeature: onEachFeature
 })
 let everyone = L.markerClusterGroup().addLayer(
@@ -211,7 +213,44 @@ let overlayMaps = {
 }
 
 // Basically sets the control menu in the upper right of the map
-let layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+let layerControl = L.control.activeLayers(baseMaps, overlayMaps).addTo(map);
+
+// console.log(layerControl.getActiveBaseLayer().name)
+
+function printLayers() {
+  map.eachLayer(function(layer) {
+    if (layer != 'State Outlines') {
+      if (map.hasLayer(layer)) {
+        console.log(layer)
+      }
+    }
+  })
+  // rehearsalDinnerAttendees.eachLayer(function(layer) {
+  //   // Need to figure out a way to get the coordinates of all the points in a "clustered cluster",
+  //   // NOT the points of the cluster itself
+
+  //   // // THIS PART IS PROBABLY GOOD
+  //   // console.log(layer.feature.properties.name);
+  //   // console.log(layer.feature.geometry.coordinates);
+
+  //   console.log(layer.getAllChildMarkers())
+
+
+  // let overlayLayers = layerControl.getActiveOverlayLayers()
+  // for (let layer in overlayLayers) {
+  //   console.log(overlayLayers[layer])
+  // }
+}
+
+// function printLayers() {
+//   let layers = []
+//   map.eachLayer(function(layer) {
+//     if (layer instanceof L.geoJSON) {
+//       layers.push(layer);
+//     }
+//   });
+//   console.log(layers)
+// }
 
 // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
 function onEachFeature(feature, layer) {
@@ -219,8 +258,12 @@ function onEachFeature(feature, layer) {
   if (feature.properties && feature.properties.popupContent) {
     layer.bindPopup(feature.properties.popupContent);
   }
+  // let activeLayers = layerControl.getActiveOverlayLayers()
+  // for (let layer in activeLayers) {
+  //   console.log(layer)
+  // }
   layer.on({
-    mouseover: highlightFeature,
+    mouseover: printLayers, // highlightFeature,
     mouseout: resetHighlight,
     click: zoomToFeature,
   })
@@ -376,6 +419,7 @@ function getColor(dataPoint) {
                            'white'; 
 }
 
+
 // Styles the colors based on the density determined above
 function style(feature) {
   return {
@@ -390,6 +434,8 @@ function style(feature) {
 
 // Outlines a state in a dark grey border when the user hovers over it with a mouse.
 function highlightFeature(e) {
+  if (map.hasLayer(stateOutlines)) {
+    console.log('booger')
     let layer = e.target;
 
     layer.setStyle({
@@ -403,18 +449,23 @@ function highlightFeature(e) {
         layer.bringToFront();
     }
     info.update(layer.feature.properties);
+  }
 }
 
 // Removes the dark grey border (defined immediately above) when the user removes their mouse cursor from over the state.
 function resetHighlight(e) {
-  // Important to reset the highlights of the states data, NOT the guests data!
-  stateOutlines.resetStyle(e.target);
-  info.update();
+  if (map.hasLayer(stateOutlines)) {
+    // Important to reset the highlights of the states data, NOT the guests data!
+    stateOutlines.resetStyle(e.target);
+    info.update();
+  }
 }
 
 // Enables a user to click on a state to zoom in and see points in more detail.
 function zoomToFeature(e) {
+  if (map.hasLayer(stateOutlines)) {
     map.fitBounds(e.target.getBounds());
+  }
 }
 
 // Creates the map title
@@ -435,6 +486,7 @@ info.onAdd = function (map) {
 };
 
 // Method that we will use to update the control based on feature properties passed
+// Basically just updates the density control section when the state outlines are plotted)
 info.update = function (props) {
 
     // Adjusts the text that the user sees to be grammatically correct
@@ -502,6 +554,20 @@ stateOutlines.on('remove', function(e) {
 
 // when a layer is selected to be ADDED, what do we want to do?
 // we want to first iterate over all the other layers of markers (map.eachLayer...)...
+
+// let alreadyExists = false
+// let 
+
+
+
+// function printLayer() {
+//   defaultCluster.getLayers().forEach((layer) => {
+//     if (map.hasLayer()) {
+//       markers = layer.getAllChildMarkers()
+//       console.log(markers)
+//     }
+//   })
+// }
 // check if any other layers of markers have already been selected to be added (e.g., checked) (map.hasLayer...)...
 // compare the markers in the layers that have already been added with the points in the layer that will be added...
 // see if any of those markers are duplicates...
