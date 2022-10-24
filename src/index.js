@@ -212,19 +212,72 @@ let overlayMaps = {
   "Heard From (but not invited)": heardFrom 
 }
 
+// thanks to https://stackoverflow.com/questions/44322326/how-to-get-selected-layers-in-control-layers
+// this helps to tell which overlay layers are checked/plotted on the map
+L.Control.Layers.include({
+  getOverlays: function() {
+    // create a hash to hold all the layers
+    let layers = {};
+    let control = this;
+    // loop through all the layers in the control
+    control._layers.forEach(function(obj) {
+      let layerName;
+      // check if the layer is an overlay
+      if (obj.overlay) {
+        // get the name of the overlay
+        layerName = obj.name;
+        // store whether it's present on the map or not
+        return layers[layerName] = control._map.hasLayer(obj.layer);
+      }
+    });
+    return layers;
+  }
+})
+
 // Basically sets the control menu in the upper right of the map
-let layerControl = L.control.activeLayers(baseMaps, overlayMaps).addTo(map);
+let layerControl = new L.Control.Layers(baseMaps, overlayMaps).addTo(map);
 
 // console.log(layerControl.getActiveBaseLayer().name)
 
 function printLayers() {
+  // console.log(layerControl.getOverlays());
+  // returns an object where the keys are the guest group names ("Friends", etc.) and the values are whether or not they are currently displayed.
+  groups = layerControl.getOverlays();
+  // gets a list of all the groups in the control
+  let groupNames = Object.keys(groups);
+  // returns the groups that are actively displayed
+  let activeGroups = groupNames.filter(function(groupName) {
+    return groups[groupName]
+  });
+  console.log(activeGroups)
+
   map.eachLayer(function(layer) {
-    if (layer != 'State Outlines') {
-      if (map.hasLayer(layer)) {
-        console.log(layer)
-      }
+    // this works
+    if (layer.getChildCount) {
+      // gets the UNPLOTTED child markers of each cluster.
+      // will need to somehow be updated if the user zooms in?
+      markers = layer.getAllChildMarkers()
+      // gets the details of each marker
+      // for (let marker in markers) {
+      //   if (map.)
+      // }
+    // layerControl.getOverlays();
+
+
     }
+
   })
+}
+
+
+    // if (layer != 'State Outlines') {
+    //   // console.log('Not state outlines')
+    //   console.log(layer._layers)
+    //   // if (map.hasLayer(layer)) {
+    //   //   console.log(layer)
+    //   // }
+    // }
+
   // rehearsalDinnerAttendees.eachLayer(function(layer) {
   //   // Need to figure out a way to get the coordinates of all the points in a "clustered cluster",
   //   // NOT the points of the cluster itself
@@ -240,7 +293,7 @@ function printLayers() {
   // for (let layer in overlayLayers) {
   //   console.log(overlayLayers[layer])
   // }
-}
+
 
 // function printLayers() {
 //   let layers = []
