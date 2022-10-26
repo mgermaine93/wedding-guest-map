@@ -247,9 +247,41 @@ function printLayers() {
   let groupNames = Object.keys(groups);
   // returns the groups that are actively displayed
   let activeGroups = groupNames.filter(function(groupName) {
-    return groups[groupName]
+    if (groupName !== 'State Outlines' && groupName !== 'Church') {
+      return groups[groupName]
+    }
   });
+  // activeGroups is a list of strings...
   console.log(activeGroups)
+  
+  // prints out each individual active group
+  activeGroups.forEach(function(group) {
+    groupOfGuests = overlayMaps[group]
+    layers = groupOfGuests._featureGroup._layers
+    console.log(layers)
+    // layers.forEach(function(layer) {
+    //   if (layer.feature.properties.name) {
+    //     console.log(layer.feature.properties.name)
+    //   }
+    // })
+    // for (let layer in layers) {
+    //   console.log(layer)
+    //   if (layer.feature.properties.name) {
+    //     console.log(layer.feature.properties.name)
+    //   }
+    // }
+    
+    console.log(groupOfGuests._featureGroup._layers)
+
+    // if (groupOfGuests._featureGroup) {
+    //   features = groupOfGuests._featureGroup._layers
+    //   for (let person in features) {
+    //     console.log(person.feature.properties.name)
+    //   }
+    // }
+    // features = group._featureGroup
+    // console.log(overlayMaps[group])
+  })
 
   map.eachLayer(function(layer) {
     // this works
