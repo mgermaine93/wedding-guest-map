@@ -239,26 +239,114 @@ let layerControl = new L.Control.Layers(baseMaps, overlayMaps).addTo(map);
 
 // console.log(layerControl.getActiveBaseLayer().name)
 
+let allClusters = {
+  Church: churchGroup,
+  StateOutlines: stateOutlines,
+  Everyone: everyone,
+  Couple: couple,
+  Invited: invited,
+  Attended: attended,
+  BridesSide: bridesSide,
+  GroomsSide: groomsSide,
+  CouplesSide: couplesSide,
+  WeddingParty: weddingParty,
+  BridesFamily: bridesFamily,
+  GroomsFamily: groomsFamily,
+  Family: family,
+  Friends: friends,
+  FamilyFriends: familyFriends,
+  PreCollegeFriends: preCollegeFriends,
+  CollegeFriends: collegeFriends,
+  PostCollegeFriends: postCollegeFriends,
+  RehearsalDinnerAttendees: rehearsalDinnerAttendees,
+  WelcomePartyAttendees: welcomePartyAttendees,
+  Vendors: vendors,
+  HeardFrom: heardFrom 
+}
+
+// // returns the value of true/false from the groupsObject variable.
+// function isActive(group) {
+//   if (groupName !== 'State Outlines' && groupName !== 'Church') {
+//     return groupsObject[group]
+//   }
+// }
+
 function printLayers() {
   // console.log(layerControl.getOverlays());
   // returns an object where the keys are the guest group names ("Friends", etc.) and the values are whether or not they are currently displayed.
-  groups = layerControl.getOverlays();
-  // gets a list of all the groups in the control
-  let groupNames = Object.keys(groups);
+  let groupsObject = layerControl.getOverlays();
+  // gets a list of all the groups (keys) in the control
+  let groupNamesArray = Object.keys(groupsObject);
+  // console.log(groupNamesArray)
   // returns the groups that are actively displayed
-  let activeGroups = groupNames.filter(function(groupName) {
-    if (groupName !== 'State Outlines' && groupName !== 'Church') {
-      return groups[groupName]
+  let activeGroups = groupNamesArray.filter(function(groupName) {
+    if (groupName !== 'State Outlines' && groupName !== 'Church' && groupsObject[groupName]) {
+      return groupName
     }
   });
-  // activeGroups is a list of strings...
   console.log(activeGroups)
+  // activeGroups is an array of strings...
+  // console.log(activeGroups)
+  // console.log(couple)
+
+  // UNDER CONSTRUCTION -- BIG TIME!
+  // Goal here is to do the following:
+  // Get all markers/layers that are currently displayed on the map from activeGroups
+  // Determine if any of the markers/layers are duplicates
+  // Somehow remove the duplicates from what is displayed on the map
+  activeGroups.forEach(function(group) {
+    console.log(group)
+    listOfGroupLayers = allClusters[group].getLayers()
+    for (let index in listOfGroupLayers) {
+      console.log(listOfGroupLayers[index].feature.properties.name)
+    }
+    // https://stackoverflow.com/questions/66345788/remove-markers-from-leaflet-markercluster-when-they-are-clustered
+    // using the hasLayer() method should work here at some point to determine whether or not the marker in on the map and/or in the cluster.
+  })
+    // listOfGroupLayers = group.getLayers()
+    // for (index in listOfGroupLayers) {
+    //   console.log(listOfGroupLayers[index].feature.properties.name)
+    // }
+}
+  // get the NAME property of each marker in a layer
+  // listOfGroupLayers = couple.getLayers()
+  // for (index in listOfGroupLayers) {
+  //   console.log(listOfGroupLayers[index].feature.properties.name)
+  // }
+  // for (let marker in couple) {
+  //   console.log(marker)
+  // }
+
+  // console.log(couple.getLayers())
+  // console.log(groupsObject)
+
+  // so each marker is a layer???
+  // let coupleMarkers = couple.getLayers()
+  // for (let marker of coupleMarkers) {
+  //   // check if the marker is plotted
+  //   if (map.hasLayer(marker)) {
+  //     console.log("Yes")
+  //   }
+  //   // check if the marker is in the cluster
+  //   // else if (marker.hasLayer(marker)) {
+  //   //   console.log("No")
+  //   // }
+  // } 
+  // console.log(couple.getLayers())
+
+  
+  // allClusters._featureGroup.eachLayer(function(x) {
+  //   if (x instanceof MarkerCluster) {
+  //     console.log(x);
+  //   }
+  // })
   
   // prints out each individual active group
-  activeGroups.forEach(function(group) {
-    groupOfGuests = overlayMaps[group]
-    layers = groupOfGuests._featureGroup._layers
-    console.log(layers)
+  // activeGroups.forEach(function(group) {
+  //   groupOfGuests = overlayMaps[group]
+  //   console.log(groupOfGuests.getAllChildMarkers())
+    // layers = groupOfGuests._featureGroup._layers
+    // console.log(layers)
     // layers.forEach(function(layer) {
     //   if (layer.feature.properties.name) {
     //     console.log(layer.feature.properties.name)
@@ -271,7 +359,8 @@ function printLayers() {
     //   }
     // }
     
-    console.log(groupOfGuests._featureGroup._layers)
+    // console.log(groupOfGuests._featureGroup._layers)
+    // console.log(groupOfGuests.getAllChildMarkers())
 
     // if (groupOfGuests._featureGroup) {
     //   features = groupOfGuests._featureGroup._layers
@@ -281,25 +370,26 @@ function printLayers() {
     // }
     // features = group._featureGroup
     // console.log(overlayMaps[group])
-  })
+  // }
+// )
 
-  map.eachLayer(function(layer) {
-    // this works
-    if (layer.getChildCount) {
-      // gets the UNPLOTTED child markers of each cluster.
-      // will need to somehow be updated if the user zooms in?
-      markers = layer.getAllChildMarkers()
-      // gets the details of each marker
-      // for (let marker in markers) {
-      //   if (map.)
-      // }
-    // layerControl.getOverlays();
+  // map.eachLayer(function(layer) {
+  //   // this works
+  //   if (layer.getChildCount) {
+  //     // gets the UNPLOTTED child markers of each cluster.
+  //     // will need to somehow be updated if the user zooms in?
+  //     markers = layer.getAllChildMarkers()
+  //     // gets the details of each marker
+  //     // for (let marker in markers) {
+  //     //   if (map.)
+  //     // }
+  //   // layerControl.getOverlays();
 
 
-    }
+  //   }
 
-  })
-}
+  // })
+
 
 
     // if (layer != 'State Outlines') {
@@ -336,6 +426,15 @@ function printLayers() {
 //   });
 //   console.log(layers)
 // }
+
+
+function iterateThroughLayer(mapLayer) {
+  listOfPeopleToPlot = []
+  if (listOfEveryone.includes(mapLayer.feature.properties.name)) {
+    // Plot them
+  }
+}
+
 
 // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
 function onEachFeature(feature, layer) {
