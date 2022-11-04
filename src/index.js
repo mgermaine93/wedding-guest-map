@@ -239,31 +239,6 @@ let layerControl = new L.Control.Layers(baseMaps, overlayMaps).addTo(map);
 
 // console.log(layerControl.getActiveBaseLayer().name)
 
-let allClusters = {
-  Church: churchGroup,
-  StateOutlines: stateOutlines,
-  Everyone: everyone,
-  Couple: couple,
-  Invited: invited,
-  Attended: attended,
-  BridesSide: bridesSide,
-  GroomsSide: groomsSide,
-  CouplesSide: couplesSide,
-  WeddingParty: weddingParty,
-  BridesFamily: bridesFamily,
-  GroomsFamily: groomsFamily,
-  Family: family,
-  Friends: friends,
-  FamilyFriends: familyFriends,
-  PreCollegeFriends: preCollegeFriends,
-  CollegeFriends: collegeFriends,
-  PostCollegeFriends: postCollegeFriends,
-  RehearsalDinnerAttendees: rehearsalDinnerAttendees,
-  WelcomePartyAttendees: welcomePartyAttendees,
-  Vendors: vendors,
-  HeardFrom: heardFrom 
-}
-
 // // returns the value of true/false from the groupsObject variable.
 // function isActive(group) {
 //   if (groupName !== 'State Outlines' && groupName !== 'Church') {
@@ -272,37 +247,56 @@ let allClusters = {
 // }
 
 function printLayers() {
-  // console.log(layerControl.getOverlays());
+
   // returns an object where the keys are the guest group names ("Friends", etc.) and the values are whether or not they are currently displayed.
   let groupsObject = layerControl.getOverlays();
+
   // gets a list of all the groups (keys) in the control
   let groupNamesArray = Object.keys(groupsObject);
-  // console.log(groupNamesArray)
+
   // returns the groups that are actively displayed
   let activeGroups = groupNamesArray.filter(function(groupName) {
     if (groupName !== 'State Outlines' && groupName !== 'Church' && groupsObject[groupName]) {
       return groupName
     }
   });
-  console.log(activeGroups)
+  // console.log(activeGroups)
   // activeGroups is an array of strings...
   // console.log(activeGroups)
   // console.log(couple)
 
   // UNDER CONSTRUCTION -- BIG TIME!
   // Goal here is to do the following:
-  // Get all markers/layers that are currently displayed on the map from activeGroups
+  // Get all markers/layers that are currently displayed on the map from activeGroups -- DONE
   // Determine if any of the markers/layers are duplicates
   // Somehow remove the duplicates from what is displayed on the map
+  
+  listOfAllActiveLayersOnMap = []
+
+  // this snippet gets all of the names of the people currently plotted on the map
   activeGroups.forEach(function(group) {
     console.log(group)
-    listOfGroupLayers = allClusters[group].getLayers()
-    for (let index in listOfGroupLayers) {
-      console.log(listOfGroupLayers[index].feature.properties.name)
-    }
+    listOfGroupLayers = overlayMaps[group].getLayers()
+    listOfAllActiveLayersOnMap.push(...listOfGroupLayers)
+    // console.log(listOfGroupLayers)
+    // for (let index in listOfGroupLayers) {
+    //   // duplicates.push(listOfGroupLayers[index])
+    //   // console.log(listOfGroupLayers[index].feature.properties.name)
+    // }
     // https://stackoverflow.com/questions/66345788/remove-markers-from-leaflet-markercluster-when-they-are-clustered
     // using the hasLayer() method should work here at some point to determine whether or not the marker in on the map and/or in the cluster.
   })
+
+  // getting there... this is wonky.
+  for (let i=0; i<listOfAllActiveLayersOnMap.length; i++) {
+    if (! map.hasLayer(listOfAllActiveLayersOnMap[i])) {
+      continue;
+    }
+    else if (map.hasLayer(listOfAllActiveLayersOnMap[i])) {
+      map.removeLayer(listOfAllActiveLayersOnMap[i])
+    }
+  }
+  // console.log(duplicates)
     // listOfGroupLayers = group.getLayers()
     // for (index in listOfGroupLayers) {
     //   console.log(listOfGroupLayers[index].feature.properties.name)
