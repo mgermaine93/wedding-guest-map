@@ -222,26 +222,6 @@ let geoJsonGroupObject = {
   "Heard From (but not invited)": heardFrom
 }
 
-// function checkIfAdded(geoJsonLayer) {
-//   geoJsonLayer.eachLayer(function(layer) {
-//     if (map.hasLayer(layer)) {
-//       map.removeLayer(layer);
-//     }
-//     else if (! map.hasLayer(layer)) {
-//       map.addLayer(layer);
-//     }
-//   })
-//   return geoJsonLayer
-  // returned_layer = []
-  // for (let i = 0; i < layer.length; i++) {
-  //   if (! map.hasLayer(layer[i])) {
-  //     returned_layer.push(marker[i])
-  //   }
-  // }
-  // return returned_layer
-// }
-
-
 // thanks to https://stackoverflow.com/questions/44322326/how-to-get-selected-layers-in-control-layers
 // this helps to tell which overlay layers are checked/plotted on the map
 L.Control.Layers.include({
@@ -284,7 +264,9 @@ active = layerControl.getActiveOverlays();
 map.on('overlayadd', printStuff)
 map.on('overlayremove', printStuff)
 
+// this needs some work
 function hasMarker(layerGroup, personName) {
+  // need to verify what "layerGroup" is when this function is used
   layerGroup.forEach(function(layer) {
     let layerName = layer.feature.properties.name
     if (layerName == personName) {
@@ -324,33 +306,6 @@ function printStuff() {
   //   //   map.addLayer(geoJsonGroupObject[layerName])
   //   // }
 }
-
-  // iterate through the list of strings
-  // for (let layer of activeLayers) {
-  //   console.log(layer)
-  //   // console.log(geoJsonGroupObject[layer])
-  //   // get the features/markers that are associated with that layer
-  //   let geoJson = geoJsonGroupObject[layer]
-  //   // console.log(geoJson)
-  //   // iterate through the actual active layer  
-  //   geoJson.eachLayer(function(layer) {
-  //     if (! parentGroup.hasLayer(layer)) {
-  //       // parentGroup.addLayer(layer)
-  //     }
-  //   })
-  // }
-  // console.log(parentGroup)
-  // map.addLayer(parentGroup)
-// }
-
-// console.log(layerControl.getActiveBaseLayer().name)
-
-// // returns the value of true/false from the groupsObject variable.
-// function isActive(group) {
-//   if (groupName !== 'State Outlines' && groupName !== 'Church') {
-//     return groupsObject[group]
-//   }
-// }
 
 function printLayers() {
 
@@ -392,141 +347,7 @@ function printLayers() {
     // https://stackoverflow.com/questions/66345788/remove-markers-from-leaflet-markercluster-when-they-are-clustered
     // using the hasLayer() method should work here at some point to determine whether or not the marker in on the map and/or in the cluster.
   })
-
-  // // getting there... this is wonky.
-  // for (let i=0; i<listOfAllActiveLayersOnMap.length; i++) {
-  //   console.log(listOfAllActiveLayersOnMap[i])
-  //   if (! map.hasLayer(listOfAllActiveLayersOnMap[i])) {
-  //     continue;
-  //   }
-  //   else if (map.hasLayer(listOfAllActiveLayersOnMap[i])) {
-  //     map.removeLayer(listOfAllActiveLayersOnMap[i])
-  //   }
-  // }
-  // console.log(duplicates)
-    // listOfGroupLayers = group.getLayers()
-    // for (index in listOfGroupLayers) {
-    //   console.log(listOfGroupLayers[index].feature.properties.name)
-    // }
 }
-  // get the NAME property of each marker in a layer
-  // listOfGroupLayers = couple.getLayers()
-  // for (index in listOfGroupLayers) {
-  //   console.log(listOfGroupLayers[index].feature.properties.name)
-  // }
-  // for (let marker in couple) {
-  //   console.log(marker)
-  // }
-
-  // console.log(couple.getLayers())
-  // console.log(groupsObject)
-
-  // so each marker is a layer???
-  // let coupleMarkers = couple.getLayers()
-  // for (let marker of coupleMarkers) {
-  //   // check if the marker is plotted
-  //   if (map.hasLayer(marker)) {
-  //     console.log("Yes")
-  //   }
-  //   // check if the marker is in the cluster
-  //   // else if (marker.hasLayer(marker)) {
-  //   //   console.log("No")
-  //   // }
-  // } 
-  // console.log(couple.getLayers())
-
-  
-  // allClusters._featureGroup.eachLayer(function(x) {
-  //   if (x instanceof MarkerCluster) {
-  //     console.log(x);
-  //   }
-  // })
-  
-  // prints out each individual active group
-  // activeGroups.forEach(function(group) {
-  //   groupOfGuests = overlayMaps[group]
-  //   console.log(groupOfGuests.getAllChildMarkers())
-    // layers = groupOfGuests._featureGroup._layers
-    // console.log(layers)
-    // layers.forEach(function(layer) {
-    //   if (layer.feature.properties.name) {
-    //     console.log(layer.feature.properties.name)
-    //   }
-    // })
-    // for (let layer in layers) {
-    //   console.log(layer)
-    //   if (layer.feature.properties.name) {
-    //     console.log(layer.feature.properties.name)
-    //   }
-    // }
-    
-    // console.log(groupOfGuests._featureGroup._layers)
-    // console.log(groupOfGuests.getAllChildMarkers())
-
-    // if (groupOfGuests._featureGroup) {
-    //   features = groupOfGuests._featureGroup._layers
-    //   for (let person in features) {
-    //     console.log(person.feature.properties.name)
-    //   }
-    // }
-    // features = group._featureGroup
-    // console.log(overlayMaps[group])
-  // }
-// )
-
-  // map.eachLayer(function(layer) {
-  //   // this works
-  //   if (layer.getChildCount) {
-  //     // gets the UNPLOTTED child markers of each cluster.
-  //     // will need to somehow be updated if the user zooms in?
-  //     markers = layer.getAllChildMarkers()
-  //     // gets the details of each marker
-  //     // for (let marker in markers) {
-  //     //   if (map.)
-  //     // }
-  //   // layerControl.getOverlays();
-
-
-  //   }
-
-  // })
-
-
-
-    // if (layer != 'State Outlines') {
-    //   // console.log('Not state outlines')
-    //   console.log(layer._layers)
-    //   // if (map.hasLayer(layer)) {
-    //   //   console.log(layer)
-    //   // }
-    // }
-
-  // rehearsalDinnerAttendees.eachLayer(function(layer) {
-  //   // Need to figure out a way to get the coordinates of all the points in a "clustered cluster",
-  //   // NOT the points of the cluster itself
-
-  //   // // THIS PART IS PROBABLY GOOD
-  //   // console.log(layer.feature.properties.name);
-  //   // console.log(layer.feature.geometry.coordinates);
-
-  //   console.log(layer.getAllChildMarkers())
-
-
-  // let overlayLayers = layerControl.getActiveOverlayLayers()
-  // for (let layer in overlayLayers) {
-  //   console.log(overlayLayers[layer])
-  // }
-
-
-// function printLayers() {
-//   let layers = []
-//   map.eachLayer(function(layer) {
-//     if (layer instanceof L.geoJSON) {
-//       layers.push(layer);
-//     }
-//   });
-//   console.log(layers)
-// }
 
 
 function iterateThroughLayer(mapLayer) {
