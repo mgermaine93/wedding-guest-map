@@ -32,8 +32,6 @@ let map = L.map('map', {
   layers: [osm, churchGroup] // These load when the page is initially loaded
 });
 
-let parentGroup = L.geoJson()
-
 // // Uses the helper functions (defined elsewhere) to create the different groups of guests based on criteria.
 // let stateOutlines = L.geoJson(usStatesData, {
 //   style: style,
@@ -277,22 +275,42 @@ function hasMarker(layerGroup, personName) {
 }
 
 function printStuff() {
+  // this is what will ultimately be plotted on the map
+  let parentGroup = L.geoJSON();
+  // console.log(parentGroup)
   // gets a list of strings representing the layers that are currently selected
-  activeLayers = layerControl.getActiveOverlays()
-  console.log(activeLayers)
-  activeLayers.forEach(function(layerName) {
-    console.log(layerName)
+  let activeLayerNames = layerControl.getActiveOverlays()
+  // prints out the STRING values
+  // console.log(activeLayers)
+  // iterates through the STRING values
+  activeLayerNames.forEach(function(layerName) {
+    // prints out a STRING
+    // console.log(layerName)
     // need to iterate through each marker in the specific layer and see if it is plotted
     // if the marker isn't plotted, add it either to the map directly or to a parent variable that will be plotted instead
-    let actualLayer = geoJsonGroupObject[layerName]
-    actualLayer.eachLayer(function(layer) {
-      let personName = layer.feature.properties.name
-      if (hasMarker(layer=actualLayer, personName=personName)) {
-        console.log("Yes")
+    let actualLayerOfPeople = geoJsonGroupObject[layerName]
+    actualLayerOfPeople.eachLayer(function(personLayer) {
+      // prints out each ACTUAL LAYER
+      // console.log(personLayer)
+      if (parentGroup.hasLayer(personLayer)) {
+        console.log("Has layer")
       }
-      else {
-        console.log("No")
+      else if (map.hasLayer(personLayer)) {
+        console.log("Has Layer")
       }
+      else if (! parentGroup.hasLayer(personLayer)) {
+        console.log("Does not have layer")
+        // console.log(parentGroup)
+        // console.log(personLayer.feature)
+        parentGroup.addData(personLayer.feature)
+      }
+      // let personName = layer.feature.properties.name
+      // if (hasMarker(layer=actualLayer, personName=personName)) {
+      //   console.log("Yes")
+      // }
+      // else {
+      //   console.log("No")
+      // }
     })
     // // if the marker is already plotted, continue
     // if (! map.hasLayer(geoJsonGroupObject[layerName])) {
@@ -305,6 +323,7 @@ function printStuff() {
   //   // if (! map.hasLayer(layerName)) {
   //   //   map.addLayer(geoJsonGroupObject[layerName])
   //   // }
+  parentGroup.addTo(map)
 }
 
 function printLayers() {
