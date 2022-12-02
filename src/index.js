@@ -32,132 +32,108 @@ let map = L.map('map', {
   layers: [osm, churchGroup] // These load when the page is initially loaded
 });
 
-// // Uses the helper functions (defined elsewhere) to create the different groups of guests based on criteria.
-// let stateOutlines = L.geoJson(usStatesData, {
-//   style: style,
-//   // filter: a function that somehow gets all of the plotted layers and their points?
-//   onEachFeature: onEachFeature
-// })
-
-let everyone = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: everyoneFilter,
-    onEachFeature: onEachFeature
+// The Couple
+let couple = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_groom || guest.properties.is_bride
 })
 
-let couple = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: coupleFilter,
-    onEachFeature: onEachFeature
+// Everyone
+let everyone = guestsJson.features.filter(function (guest) {
+  return true
 })
 
-let invited = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: invitedFilter,
-    onEachFeature: onEachFeature
-  })
-
-let attended = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: attendedFilter,
-    onEachFeature: onEachFeature
+// Invited
+let invited = guestsJson.features.filter(function (guest) {
+  // unsure if the equivalent to "true" is needed...
+  return guest.properties.invited == true
 })
 
-let bridesSide = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: bridesSideFilter,
-    onEachFeature: onEachFeature
+
+// Attended
+let attended = guestsJson.features.filter(function (guest) {
+  return guest.properties.attended_wedding
 })
 
-let groomsSide = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: groomsSideFilter,
-    onEachFeature: onEachFeature
+// Bride side
+let bridesSide = guestsJson.features.filter(function (guest) {
+  return guest.properties.inviter == "Eyre"
 })
 
-let couplesSide = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: couplesSideFilter,
-    onEachFeature: onEachFeature
+// Groom side
+let groomsSide = guestsJson.features.filter(function (guest) {
+  return guest.properties.inviter == "Germaine"
 })
 
-let weddingParty = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: weddingPartyFilter,
-    onEachFeature: onEachFeature
+// Couple side (friends, etc.)
+let couplesSide = guestsJson.features.filter(function (guest) {
+  return guest.properties.inviter == "Couple"
 })
 
-let bridesFamily = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isBridesFamilyFilter,
-    onEachFeature: onEachFeature
+// In wedding party
+let weddingParty = guestsJson.features.filter(function (guest) {
+  return guest.properties.in_wedding_party
 })
 
-let groomsFamily = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isGroomsFamilyFilter,
-    onEachFeature: onEachFeature
+// Is bride's family
+let bridesFamily = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_family && guest.properties.inviter == "Eyre"
 })
 
-let heardFrom = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: heardFromFilter,
-    onEachFeature: onEachFeature
+// Is groom's family
+let groomsFamily = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_family && guest.properties.inviter == "Germaine"
 })
 
-let family = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isFamilyFilter,
-    onEachFeature: onEachFeature
+// Heard from but not invited
+let heardFrom = guestsJson.features.filter(function (guest) {
+  return guest.properties.heardFrom == true && guest.properties.invited == false
 })
 
-let friends = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isFriendFilter,
-    onEachFeature: onEachFeature
+// Family
+let family = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_family == true
 })
 
-let familyFriends = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isFamilyFriendFilter,
-    onEachFeature: onEachFeature
+// Friends
+let friends = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_friend == true
 })
 
-let preCollegeFriends = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isPreCollegeFriendFilter,
-    onEachFeature: onEachFeature
+// Family friends
+let familyFriends = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_family_friend == true
 })
 
-let collegeFriends = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isCollegeFriendFilter,
-    onEachFeature: onEachFeature
+// Pre-College friends
+let preCollegeFriends = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_pre_college_friend == true
 })
 
-let postCollegeFriends = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isPostCollegeFriendFilter,
-    onEachFeature: onEachFeature
+// College friends
+let collegeFriends = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_college_friend == true
 })
 
-let rehearsalDinnerAttendees = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: attendedRehearsalDinnerFilter,
-    onEachFeature: onEachFeature
+// Post-College friends
+let postCollegeFriends = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_post_college_friend == true
 })
 
-let welcomePartyAttendees = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: attendedWelcomePartyFilter,
-    onEachFeature: onEachFeature
+// Attended rehearsal dinner
+let rehearsalDinnerAttendees = guestsJson.features.filter(function (guest) {
+  return guest.properties.attended_rehearsal_dinner == true
 })
 
-let vendors = L.geoJSON(guestsJson, {
-    // style: style,
-    filter: isVendorFilter,
-    onEachFeature: onEachFeature
+// Attended welcome party
+let welcomePartyAttendees = guestsJson.features.filter(function (guest) {
+  return guest.properties.attended_welcome_party == true
 })
+
+// Vendor
+let vendors = guestsJson.features.filter(function (guest) {
+  return guest.properties.is_vendor == true
+})
+
 
 // Defines the base open street map view that we see upon page load
 let baseMaps = {
@@ -249,140 +225,69 @@ L.Control.Layers.include({
   }
 })
 
-// // Basically sets the control menu in the upper right of the map
-// let layerControl = new L.Control.Layers(null, overlayMaps, {
-//   collapsed: false
-// }).addTo(map);
-
+// Basically sets the control menu in the upper right of the map
 let layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-active = layerControl.getActiveOverlays();
+// try to add marker cluster back in...
+let markers = L.markerClusterGroup()
+
+let parentGroup = L.geoJSON().addTo(map)
 
 // every time an overlay is added or removed, do something
-map.on('overlayadd', printStuff)
-map.on('overlayremove', printStuff)
+// before an overlay is added, I need to clear the overlays that are already present
+map.on('overlayadd', constructListOfPeopleThatWillBePlottedOnTheMap)
+map.on('overlayremove', constructListOfPeopleThatWillBePlottedOnTheMap)
 
-// this needs some work
-function hasMarker(layerGroup, personName) {
-  // need to verify what "layerGroup" is when this function is used
-  layerGroup.forEach(function(layer) {
-    let layerName = layer.feature.properties.name
-    if (layerName == personName) {
-      return true
-    }
+// OKAY, so this function creates a DUPLICATE-FREE list of people features that are ready to be plotted on the map. 
+function constructListOfPeopleThatWillBePlottedOnTheMap() {
+  
+  parentGroup.eachLayer(function(layer) {
+    parentGroup.removeLayer(layer)
   })
-  return false
-}
-
-function printStuff() {
-  // this is what will ultimately be plotted on the map
-  let parentGroup = L.geoJSON();
-  // console.log(parentGroup)
-  // gets a list of strings representing the layers that are currently selected
+  console.log(`Here is the parent group at the start: ${parentGroup}`)
+  // constants
+  let peopleWhoAreSelectedToBePlotted = []
   let activeLayerNames = layerControl.getActiveOverlays()
-  // prints out the STRING values
+
   // console.log(activeLayers)
   // iterates through the STRING values
   activeLayerNames.forEach(function(layerName) {
-    // prints out a STRING
-    // console.log(layerName)
-    // need to iterate through each marker in the specific layer and see if it is plotted
-    // if the marker isn't plotted, add it either to the map directly or to a parent variable that will be plotted instead
+    // gets the actual array of objects
     let actualLayerOfPeople = geoJsonGroupObject[layerName]
-    actualLayerOfPeople.eachLayer(function(personLayer) {
-      // prints out each ACTUAL LAYER
-      // console.log(personLayer)
-      if (parentGroup.hasLayer(personLayer)) {
-        console.log("Has layer")
+    // console.log(actualLayerOfPeople)
+    actualLayerOfPeople.forEach(function(person) {
+      // console.log(person)
+
+      // capture the names that are already in the list to be plotted
+      let namesOfPeopleToBePlotted = peopleWhoAreSelectedToBePlotted.map(element => element.properties.name)
+      if (namesOfPeopleToBePlotted.includes(person.properties.name)) {
+        console.log(person.properties.name)
+        console.log("Duplicate detected!")
       }
-      else if (map.hasLayer(personLayer)) {
-        console.log("Has Layer")
+      else {
+        peopleWhoAreSelectedToBePlotted.push(person)
       }
-      else if (! parentGroup.hasLayer(personLayer)) {
-        console.log("Does not have layer")
-        // console.log(parentGroup)
-        // console.log(personLayer.feature)
-        parentGroup.addData(personLayer.feature)
-      }
-      // let personName = layer.feature.properties.name
-      // if (hasMarker(layer=actualLayer, personName=personName)) {
-      //   console.log("Yes")
-      // }
-      // else {
-      //   console.log("No")
-      // }
     })
-    // // if the marker is already plotted, continue
-    // if (! map.hasLayer(geoJsonGroupObject[layerName])) {
-    //   map.addLayer(geoJsonGroupObject[layerName])
-    // }
   })
-  // for (let layerName in activeLayers) {
-  //   console.log(layerName)
-  //   console.log(geoJsonGroupObject.layerName)
-  //   // if (! map.hasLayer(layerName)) {
-  //   //   map.addLayer(geoJsonGroupObject[layerName])
-  //   // }
-  parentGroup.addTo(map)
-}
-
-function printLayers() {
-
-  // returns an object where the keys are the guest group names ("Friends", etc.) and the values are whether or not they are currently displayed.
-  let groupsObject = layerControl.getOverlays();
-
-  // gets a list of all the groups (keys) in the control
-  let groupNamesArray = Object.keys(groupsObject);
-
-  // returns the groups that are actively displayed
-  let activeGroups = groupNamesArray.filter(function(groupName) {
-    if (groupName !== 'State Outlines' && groupName !== 'Church' && groupsObject[groupName]) {
-      return groupName
-    }
-  });
-  // console.log(activeGroups)
-  // activeGroups is an array of strings...
-  // console.log(activeGroups)
-  // console.log(couple)
-
-  // UNDER CONSTRUCTION -- BIG TIME!
-  // Goal here is to do the following:
-  // Get all markers/layers that are currently displayed on the map from activeGroups -- DONE
-  // Determine if any of the markers/layers are duplicates
-  // Somehow remove the duplicates from what is displayed on the map
-  
-  listOfAllActiveLayersOnMap = []
-
-  // this snippet gets all of the names of the people currently plotted on the map
-  activeGroups.forEach(function(group) {
-    console.log(group)
-    listOfGroupLayers = overlayMaps[group].getLayers()
-    listOfAllActiveLayersOnMap.push(...listOfGroupLayers)
-    // console.log(listOfGroupLayers)
-    // for (let index in listOfGroupLayers) {
-    //   // duplicates.push(listOfGroupLayers[index])
-    //   // console.log(listOfGroupLayers[index].feature.properties.name)
-    // }
-    // https://stackoverflow.com/questions/66345788/remove-markers-from-leaflet-markercluster-when-they-are-clustered
-    // using the hasLayer() method should work here at some point to determine whether or not the marker in on the map and/or in the cluster.
+  peopleWhoAreSelectedToBePlotted.forEach(function(personFeature) {
+    parentGroup.addData(personFeature)
   })
+  parentGroup.eachLayer(function(layer) {
+    layer.bindPopup(layer.feature.properties.popupContent)
+  })
+  console.log(`Here is the parent group at the end: ${parentGroup}`)
+  console.log(parentGroup)
+
+  // console.log(parentGroup)
+  // parentGroup.addTo(map)
 }
 
-
-function iterateThroughLayer(mapLayer) {
-  listOfPeopleToPlot = []
-  if (listOfEveryone.includes(mapLayer.feature.properties.name)) {
-    // Plot them
-  }
-}
-
-
-// HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
-function onEachFeature(feature, layer) {
-  // checks if the feature has a property called "popupContent"
-  if (feature.properties && feature.properties.popupContent) {
-    layer.bindPopup(feature.properties.popupContent);
-  }
+// // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
+// function onEachFeature(feature, layer) {
+//   // checks if the feature has a property called "popupContent"
+//   if (feature.properties && feature.properties.popupContent) {
+//     layer.bindPopup(feature.properties.popupContent);
+//   }
   // if (map.hasLayer(layer)) {
   //   console.log(feature)
   //   console.log("Hi")
@@ -405,144 +310,7 @@ function onEachFeature(feature, layer) {
   //   mouseout: resetHighlight,
   //   click: zoomToFeature,
   // })
-}
-
-// The Couple
-function coupleFilter(feature) {
-  if (feature.properties.is_groom || feature.properties.is_bride) {
-    return true;
-  }
-}
-
-// Everyone
-function everyoneFilter(feature) {
-  return true;
-}
-
-// Invited
-function invitedFilter(feature) {
-  if (feature.properties.invited == true) {
-    return true;
-  }
-}
-
-// Attended
-function attendedFilter(feature) {
-  if (feature.properties.attended_wedding == true) {
-    return true;
-  }
-}
-
-// Bride side
-function bridesSideFilter(feature) {
-  if (feature.properties.inviter == "Eyre") {
-    return true;
-  }
-}
-
-// Groom side
-function groomsSideFilter(feature) {
-  if (feature.properties.inviter == "Germaine") {
-    return true;
-  }
-}
-
-// Couple side (friends, etc.)
-function couplesSideFilter(feature) {
-  if (feature.properties.inviter == "Couple") {
-    return true;
-  }
-}
-
-// In wedding party
-function weddingPartyFilter(feature) {
-  if (feature.properties.in_wedding_party == true) {
-    return true;
-  }
-}
-
-// Is bride's family
-function isBridesFamilyFilter(feature) {
-  if (feature.properties.is_family == true && feature.properties.inviter == "Eyre") {
-    return true;
-  }
-}
-
-// Is groom's family
-function isGroomsFamilyFilter(feature) {
-  if (feature.properties.is_family == true && feature.properties.inviter == "Germaine") {
-    return true;
-  }
-}
-
-// Heard from but not invited
-function heardFromFilter(feature) {
-  if (feature.properties.heardFrom == true && feature.properties.invited == false) {
-    return true;
-  }
-}
-
-// Family
-function isFamilyFilter(feature) {
-  if (feature.properties.is_family == true) {
-    return true;
-  }
-}
-
-// Friends
-function isFriendFilter(feature) {
-  if (feature.properties.is_friend == true) {
-    return true;
-  }
-}
-
-// Family friends
-function isFamilyFriendFilter(feature) {
-  if (feature.properties.is_family_friend == true) {
-    return true;
-  }
-}
-
-// Pre-College friends
-function isPreCollegeFriendFilter(feature) {
-  if (feature.properties.is_pre_college_friend == true) {
-    return true;
-  }
-}
-
-// College friends
-function isCollegeFriendFilter(feature) {
-  if (feature.properties.is_college_friend == true) {
-    return true;
-  }
-}
-// Post-College friends
-function isPostCollegeFriendFilter(feature) {
-  if (feature.properties.is_post_college_friend == true) {
-    return true;
-  }
-}
-
-// Attended rehearsal dinner
-function attendedRehearsalDinnerFilter(feature) {
-  if (feature.properties.attended_rehearsal_dinner == true) {
-    return true;
-  }
-}
-
-// Attended welcome party
-function attendedWelcomePartyFilter(feature) {
-  if (feature.properties.attended_welcome_party == true) {
-    return true;
-  }
-}
-
-// Vendor
-function isVendorFilter(feature) {
-  if (feature.properties.is_vendor == true) {
-    return true;
-  }
-}
+// }
 
 // // Get colors based on population density
 // function getColor(dataPoint) {
