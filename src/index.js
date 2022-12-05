@@ -144,7 +144,7 @@ let baseMaps = {
 let overlayMaps = {
   // Different groups of points go here
   "Church": L.geoJSON(),
-  // "State Outlines": stateOutlines,
+  // "State Outlines": usStatesData,
   "Everyone": L.geoJSON(),
   "Couple": L.geoJSON(),
   "Invitees": L.geoJSON(),
@@ -172,7 +172,7 @@ let overlayMaps = {
 let geoJsonGroupObject = {
   // Different groups of points go here
   "Church": churchGroup,
-  // "State Outlines": stateOutlines,
+  // "State Outlines": usStatesData,
   "Everyone": everyone,
   "Couple": couple,
   "Invitees": invited,
@@ -214,11 +214,13 @@ L.Control.Layers.include({
       }
     });
     
-    // console.log(layers)
     keys = Object.keys(layers)
     
     let activeLayers = keys.filter(function(key) {
-      return layers[key]
+      // factors out the layers that don't have any people associated with them
+      if (key !== "Church" && key !== "State Outlines") {
+        return layers[key]
+      }
     })
     return activeLayers;
   }
@@ -269,10 +271,13 @@ function constructListOfPeopleThatWillBePlottedOnTheMap() {
       }
     })
   })
+
   // adds each feature (each feature represents a person) to the list defined above
   peopleWhoAreSelectedToBePlotted.forEach(function(personFeature) {
     parentGroup.addData(personFeature)
   })
+
+  // binds each popup and adds the entire layer to the markercluster
   parentGroup.eachLayer(function(layer) {
     layer.bindPopup(layer.feature.properties.popupContent)
     markerCluster.addLayer(layer)
@@ -287,41 +292,25 @@ function constructListOfPeopleThatWillBePlottedOnTheMap() {
 //   if (feature.properties && feature.properties.popupContent) {
 //     layer.bindPopup(feature.properties.popupContent);
 //   }
-  // if (map.hasLayer(layer)) {
-  //   console.log(feature)
-  //   console.log("Hi")
-  // }
-  // if (! map.hasLayer(layer)) {
-  //   map.addLayer(layer)
-  // }
-  // else if (map.hasLayer(layer)) {
-  //   map.removeLayer(layer)
-  // }
-  
-  // console.log(feature);
-  // console.log(layer);
-  // let activeLayers = layerControl.getActiveOverlayLayers()
-  // for (let layer in activeLayers) {
-  //   console.log(layer)
-  // }
-  // layer.on({
-  //   mouseover: printLayers, // highlightFeature
-  //   mouseout: resetHighlight,
-  //   click: zoomToFeature,
-  // })
+
+//   layer.on({
+//     mouseover: highlightFeature,
+//     mouseout: resetHighlight,
+//     click: zoomToFeature,
+//   })
 // }
 
 // // Get colors based on population density
 // function getColor(dataPoint) {
 //   return dataPoint > 50 ? '#b10026' :
-//          dataPoint > 20 ? '#e31a1c' :
-//          dataPoint > 10  ? '#fc4e2a' :
-//          dataPoint > 5  ? '#fd8d3c' :
-//          dataPoint > 3  ? '#feb24c' :
-//          dataPoint > 2   ? '#fed976' :
-//          dataPoint > 1   ? '#ffeda0' :
-//          dataPoint > 0   ? '#ffffcc' :
-//                            'white'; 
+//     dataPoint > 20 ? '#e31a1c' :
+//     dataPoint > 10  ? '#fc4e2a' :
+//     dataPoint > 5  ? '#fd8d3c' :
+//     dataPoint > 3  ? '#feb24c' :
+//     dataPoint > 2   ? '#fed976' :
+//     dataPoint > 1   ? '#ffeda0' :
+//     dataPoint > 0   ? '#ffffcc' :
+//                        'white'; 
 // }
 
 
@@ -340,7 +329,6 @@ function constructListOfPeopleThatWillBePlottedOnTheMap() {
 // // Outlines a state in a dark grey border when the user hovers over it with a mouse.
 // function highlightFeature(e) {
 //   if (map.hasLayer(stateOutlines)) {
-//     console.log('booger')
 //     let layer = e.target;
 
 //     layer.setStyle({
@@ -452,41 +440,3 @@ function constructListOfPeopleThatWillBePlottedOnTheMap() {
 //     legend.remove(map);
 //   }
 // });
-
-// UNDER CONSTRUCTION //
-
-// okay, some pseudo-code...
-
-// when a layer is selected to be ADDED, what do we want to do?
-// we want to first iterate over all the other layers of markers (map.eachLayer...)...
-
-// let alreadyExists = false
-// let 
-
-
-
-// function printLayer() {
-//   defaultCluster.getLayers().forEach((layer) => {
-//     if (map.hasLayer()) {
-//       markers = layer.getAllChildMarkers()
-//       console.log(markers)
-//     }
-//   })
-// }
-// check if any other layers of markers have already been selected to be added (e.g., checked) (map.hasLayer...)...
-// compare the markers in the layers that have already been added with the points in the layer that will be added...
-// see if any of those markers are duplicates...
-// if so, don't add duplicates of those markers.
-// if not, add the marker.
-
-// the opposite is basically true for REMOVING layers...
-// when a layer is selected to be REMOVED...
-// first, iterate over all the other layers of markers...
-// check to see if any other layers have been added...
-// check to see if the layer to be removed contains markers that are in another plotted layer (e.g., markers that should remain on the map)
-// if there are such markers, somehow skip them and DON'T remove them from the map.
-// if there aren't any such markers, proceed with removing them from the map.
-
-//// DOCUMENTATION for eachLayer() and hasLayer() is probably a good place to start.
-//// Need to also figure out how to iterate over markers and find points/properties of markers.
-// https://leafletjs.com/reference.html#map-methods-for-layers-and-controls
