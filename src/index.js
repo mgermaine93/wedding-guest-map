@@ -48,7 +48,6 @@ let invited = guestsJson.features.filter(function (guest) {
   return guest.properties.invited == true
 })
 
-
 // Attended
 let attended = guestsJson.features.filter(function (guest) {
   return guest.properties.attended_wedding
@@ -225,39 +224,40 @@ L.Control.Layers.include({
   }
 })
 
-// Basically sets the control menu in the upper right of the map
+// sets the control menu in the upper right of the map
 let layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
-// try to add marker cluster back in...
-let markers = L.markerClusterGroup()
-
-let parentGroup = L.geoJSON().addTo(map)
+// these values are what are ultimately plotted/used on the map
+let markerCluster = L.markerClusterGroup()
+let parentGroup = L.geoJSON()
 
 // every time an overlay is added or removed, do something
-// before an overlay is added, I need to clear the overlays that are already present
 map.on('overlayadd', constructListOfPeopleThatWillBePlottedOnTheMap)
 map.on('overlayremove', constructListOfPeopleThatWillBePlottedOnTheMap)
 
 // OKAY, so this function creates a DUPLICATE-FREE list of people features that are ready to be plotted on the map. 
 function constructListOfPeopleThatWillBePlottedOnTheMap() {
   
+  // removes any existing layers from the predefined markercluster group so that duplicate layers are not plotted
+  markerCluster.eachLayer(function(layer) {
+    markerCluster.removeLayer(layer)
+  })
+
+  // removes any existing layers from the predefined parent group so that duplicate layers are not plotted
   parentGroup.eachLayer(function(layer) {
     parentGroup.removeLayer(layer)
   })
-  console.log(`Here is the parent group at the start: ${parentGroup}`)
+
   // constants
   let peopleWhoAreSelectedToBePlotted = []
   let activeLayerNames = layerControl.getActiveOverlays()
 
-  // console.log(activeLayers)
   // iterates through the STRING values
   activeLayerNames.forEach(function(layerName) {
     // gets the actual array of objects
     let actualLayerOfPeople = geoJsonGroupObject[layerName]
     // console.log(actualLayerOfPeople)
     actualLayerOfPeople.forEach(function(person) {
-      // console.log(person)
-
       // capture the names that are already in the list to be plotted
       let namesOfPeopleToBePlotted = peopleWhoAreSelectedToBePlotted.map(element => element.properties.name)
       if (namesOfPeopleToBePlotted.includes(person.properties.name)) {
@@ -269,17 +269,16 @@ function constructListOfPeopleThatWillBePlottedOnTheMap() {
       }
     })
   })
+  // adds each feature (each feature represents a person) to the list defined above
   peopleWhoAreSelectedToBePlotted.forEach(function(personFeature) {
     parentGroup.addData(personFeature)
   })
   parentGroup.eachLayer(function(layer) {
     layer.bindPopup(layer.feature.properties.popupContent)
+    markerCluster.addLayer(layer)
   })
-  console.log(`Here is the parent group at the end: ${parentGroup}`)
-  console.log(parentGroup)
-
-  // console.log(parentGroup)
-  // parentGroup.addTo(map)
+  // parentGroup.addTo(map);
+  map.addLayer(markerCluster)
 }
 
 // // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
