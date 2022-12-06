@@ -1,3 +1,6 @@
+var accessToken = ''
+var mapboxUrl = `https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`;
+
 // Creates the custom church icon.
 let churchIcon = L.icon({
   iconUrl: './img/church.png',
@@ -19,9 +22,29 @@ let churchGroup = L.layerGroup([church]);
 // Loads in the specific Open Street Map map/"tile" to use
 let osm = L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 11,
-    attribution: '© OpenStreetMap',
+      maxZoom: 11,
+      attribution: '© OpenStreetMap',
 });
+
+// // somehow add these in... need mapbox token, etc.
+// let streets = L.tileLayer(
+//   mapboxUrl, {
+//     id: 'mapbox-streets-v8', 
+//     tileSize: 512, 
+//     zoomOffset: -1, 
+//     attribution: 'Mapbox'
+//   }
+// );
+
+// let satellite = L.tileLayer(
+//   mapboxUrl, {
+//     id: 'mapbox-streets-v8', 
+//     tileSize: 512, 
+//     zoomOffset: -1, 
+//     attribution: 'Mapbox'
+//   }
+// );
+
 
 // Set the center onto the geographic center of the USA
 let map = L.map('map', {
@@ -32,6 +55,26 @@ let map = L.map('map', {
   layers: [osm, churchGroup] // These load when the page is initially loaded
 });
 
+// the title of the project
+L.Control.textbox = L.Control.extend({
+		onAdd: function(map) {
+      var text = L.DomUtil.create('div');
+      text.id = "map_title";
+      text.innerHTML = "Matt and Meredith's<br/>Wedding Guest Map"
+      return text;
+		},
+
+		onRemove: function(map) {
+			// Nothing to do here
+		}
+	});
+L.control.textbox = function(opts) { 
+  return new L.Control.textbox(opts);
+}
+L.control.textbox({ 
+  position: 'topright' 
+}).addTo(map);
+
 // The Couple
 let couple = guestsJson.features.filter(function (guest) {
   return guest.properties.is_groom || guest.properties.is_bride
@@ -39,13 +82,13 @@ let couple = guestsJson.features.filter(function (guest) {
 
 // Everyone
 let everyone = guestsJson.features.filter(function (guest) {
-  return true
+  return guest
 })
 
 // Invited
 let invited = guestsJson.features.filter(function (guest) {
   // unsure if the equivalent to "true" is needed...
-  return guest.properties.invited == true
+  return guest.properties.invited
 })
 
 // Attended
@@ -90,53 +133,54 @@ let heardFrom = guestsJson.features.filter(function (guest) {
 
 // Family
 let family = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_family == true
+  return guest.properties.is_family
 })
 
 // Friends
 let friends = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_friend == true
+  return guest.properties.is_friend
 })
 
 // Family friends
 let familyFriends = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_family_friend == true
+  return guest.properties.is_family_friend
 })
 
 // Pre-College friends
 let preCollegeFriends = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_pre_college_friend == true
+  return guest.properties.is_pre_college_friend
 })
 
 // College friends
 let collegeFriends = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_college_friend == true
+  return guest.properties.is_college_friend
 })
 
 // Post-College friends
 let postCollegeFriends = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_post_college_friend == true
+  return guest.properties.is_post_college_friend
 })
 
 // Attended rehearsal dinner
 let rehearsalDinnerAttendees = guestsJson.features.filter(function (guest) {
-  return guest.properties.attended_rehearsal_dinner == true
+  return guest.properties.attended_rehearsal_dinner
 })
 
 // Attended welcome party
 let welcomePartyAttendees = guestsJson.features.filter(function (guest) {
-  return guest.properties.attended_welcome_party == true
+  return guest.properties.attended_welcome_party
 })
 
 // Vendor
 let vendors = guestsJson.features.filter(function (guest) {
-  return guest.properties.is_vendor == true
+  return guest.properties.is_vendor
 })
-
 
 // Defines the base open street map view that we see upon page load
 let baseMaps = {
   "OpenStreetMap": osm,
+  // "Streets": streets,
+  // "Satellite": satellite
 }
 
 // Defines the different layers we can select in the control
@@ -144,7 +188,6 @@ let baseMaps = {
 let overlayMaps = {
   // Different groups of points go here
   "Church": L.geoJSON(),
-  // "State Outlines": usStatesData,
   "Everyone": L.geoJSON(),
   "Couple": L.geoJSON(),
   "Invitees": L.geoJSON(),
@@ -172,7 +215,6 @@ let overlayMaps = {
 let geoJsonGroupObject = {
   // Different groups of points go here
   "Church": churchGroup,
-  // "State Outlines": usStatesData,
   "Everyone": everyone,
   "Couple": couple,
   "Invitees": invited,
@@ -194,6 +236,33 @@ let geoJsonGroupObject = {
   "Vendors": vendors,
   "Heard From (but not invited)": heardFrom
 }
+
+
+let layerLegend = L.control({
+  position: 'bottomright',
+  collapsed: false
+});
+
+layerLegend.onAdd = function () {
+  let div = L.DomUtil.create('div');
+  div.innerHTML = '<span class="layer_legend">blah<br/></span>';
+  return div;
+};
+
+layerLegend.addTo(map);
+
+// sets the control menu in the upper right of the map
+let layerControl = L.control.layers(
+  baseMaps, 
+  overlayMaps, {
+    position: 'bottomright',
+    collapsed: false
+}).addTo(map);
+
+// cool part
+let layerControlDiv = layerControl.getContainer();
+layerControlDiv.insertBefore(layerLegend.getContainer(), layerControlDiv.firstChild);
+
 
 // thanks to https://stackoverflow.com/questions/44322326/how-to-get-selected-layers-in-control-layers
 // this helps to tell which overlay layers are checked/plotted on the map
@@ -225,9 +294,6 @@ L.Control.Layers.include({
     return activeLayers;
   }
 })
-
-// sets the control menu in the upper right of the map
-let layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 // these values are what are ultimately plotted/used on the map
 let markerCluster = L.markerClusterGroup()
@@ -285,158 +351,3 @@ function constructListOfPeopleThatWillBePlottedOnTheMap() {
   // parentGroup.addTo(map);
   map.addLayer(markerCluster)
 }
-
-// // HELPER FUNCTIONS THAT PARSE GUESTS INTO DIFFERENT GROUPS BASED ON CRITERIA
-// function onEachFeature(feature, layer) {
-//   // checks if the feature has a property called "popupContent"
-//   if (feature.properties && feature.properties.popupContent) {
-//     layer.bindPopup(feature.properties.popupContent);
-//   }
-
-//   layer.on({
-//     mouseover: highlightFeature,
-//     mouseout: resetHighlight,
-//     click: zoomToFeature,
-//   })
-// }
-
-// // Get colors based on population density
-// function getColor(dataPoint) {
-//   return dataPoint > 50 ? '#b10026' :
-//     dataPoint > 20 ? '#e31a1c' :
-//     dataPoint > 10  ? '#fc4e2a' :
-//     dataPoint > 5  ? '#fd8d3c' :
-//     dataPoint > 3  ? '#feb24c' :
-//     dataPoint > 2   ? '#fed976' :
-//     dataPoint > 1   ? '#ffeda0' :
-//     dataPoint > 0   ? '#ffffcc' :
-//                        'white'; 
-// }
-
-
-// // Styles the colors based on the density determined above
-// function style(feature) {
-//   return {
-//     fillColor: getColor(feature.properties.density),
-//     weight: 2,
-//     opacity: 1,
-//     color: 'white',
-//     dashArray: '3',
-//     fillOpacity: 0.7
-//   };
-// }
-
-// // Outlines a state in a dark grey border when the user hovers over it with a mouse.
-// function highlightFeature(e) {
-//   if (map.hasLayer(stateOutlines)) {
-//     let layer = e.target;
-
-//     layer.setStyle({
-//         weight: 5,
-//         color: '#666',  // dark grey
-//         dashArray: '',
-//         fillOpacity: 0.7
-//     });
-
-//     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-//         layer.bringToFront();
-//     }
-//     info.update(layer.feature.properties);
-//   }
-// }
-
-// // Removes the dark grey border (defined immediately above) when the user removes their mouse cursor from over the state.
-// function resetHighlight(e) {
-//   if (map.hasLayer(stateOutlines)) {
-//     // Important to reset the highlights of the states data, NOT the guests data!
-//     stateOutlines.resetStyle(e.target);
-//     info.update();
-//   }
-// }
-
-// // Enables a user to click on a state to zoom in and see points in more detail.
-// function zoomToFeature(e) {
-//   if (map.hasLayer(stateOutlines)) {
-//     map.fitBounds(e.target.getBounds());
-//   }
-// }
-
-// // Creates the map title
-// let title = L.control({position: 'topleft'});
-
-// title.onAdd = function (map) {
-//   let div = L.DomUtil.create('div', 'info title')
-//   div.innerHTML += '<h1>Wedding Map</h1>';
-// }
-
-// // Creates the Info menu that dynamically populates with state and guest number data whenever states are hovered over
-// let info = L.control({position: 'bottomleft'});
-
-// info.onAdd = function (map) {
-//     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-//     this.update();
-//     return this._div;
-// };
-
-// // Method that we will use to update the control based on feature properties passed
-// // Basically just updates the density control section when the state outlines are plotted)
-// info.update = function (props) {
-
-//     // Adjusts the text that the user sees to be grammatically correct
-//     function returnGuestValue(density) {
-//       if (density == 1) {
-//         return "guest"
-//       }
-//       return "guests"
-//     }
-//     this._div.innerHTML = '<h4>Matt and Meredith\'s Wedding Guests</h4>' +  (props ?
-//         '<b>' + props.name + '</b><br />' + props.density + ' ' + returnGuestValue(props.density) + ''
-//         : 'Hover over a state');
-// };
-
-
-// // Creates the legend for the heatmap/chloropleth diagram
-// let legend = L.control({position: 'bottomright'});
-
-// legend.onAdd = function (map) {
-//   let div = L.DomUtil.create('div', 'info legend')
-//   let grades = [0, 1, 2, 3, 5, 10, 20, 50]
-
-//   div.innerHTML += '<h3>Legend</h3>';
-
-//   // Loop through the density intervals and generate a corresponding colored label square for each interval
-//   for (let i = 0; i < grades.length; i++) {
-//     if (i == 1) {
-//       div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + ' person<br>';
-//     }
-//     // First element should just be zero
-//     else if (i < 4) {
-//       div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + ' people<br>';
-//     }
-//     // Last element should just be 50+
-//     else if (i == grades.length - 1) {
-//       div.innerHTML += '<i style="background:' + getColor(grades[i]) + '"></i> ' + grades[i] + '+ people';
-//     }
-//     // Other elements should present a range
-//     else {
-//       div.innerHTML += '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' + grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + ' people<br>' : '+');
-//     }
-//   }
-//   return div;
-// }
-
-// // Thanks to https://stackoverflow.com/questions/60563661/leaflet-how-can-i-display-a-marker-or-legend-only-on-one-layer
-// stateOutlines.on('add', function(e) {
-//   if (map.hasLayer(stateOutlines)) {
-//     info.addTo(map);
-//     legend.addTo(map);
-//   }
-// });
-
-// // Thanks to https://gis.stackexchange.com/questions/244844/how-to-remove-the-leaflet-l-control-layers
-// stateOutlines.on('remove', function(e) {
-//   if (! map.hasLayer(stateOutlines)) {
-//     info.remove(map);
-//     legend.remove(map);
-//   }
-// });
