@@ -1091,7 +1091,7 @@ let guestsJson = {
         "popupContent": "Tom",
         "heardFrom": false
       },
-      "geometry": { "type": "Point", "coordinates": ["-81.42802", "41.540836"] }
+      "geometry": { "type": "Point", "coordinates": [-81.42802, 41.540836] }
     },
     {
       "type": "Feature",
